@@ -1,4 +1,5 @@
 ﻿@model webBowlingProject.ViewModels.GamesViewModel
+    
 @{
     ViewBag.Title = "Bowling Page";
 }
@@ -18,17 +19,13 @@
             @Html.ValidationMessageFor(model => model.player)
         </div>
     </div>
-    
     <div class="form-group">
         <div class="control-label col-sm-12 text-left ">
             frame Number
         </div>
         <div>
             <div class="col-md-12">
-@foreach (var frame in Model.frames)
-    {
-                @Html.DisplayFor(m => m.frames, new { @class = "form-control", @placeholder = "Frame Number", maxlength = 200 })
-    }
+                @Html.DisplayFor(m => m.frames, new { @class = "form-control", @placeholder = "Frame Number", id="frameSet" })
             </div>
             @Html.ValidationMessageFor(model => model.frames)
         </div>
@@ -60,6 +57,18 @@
     }
 @section scripts{
     <script>
-
+        function getFrame() {
+            var Frames = $("#frameSet").val();
+            $.ajax({
+                url: '@Url.Action("Index", "Home")',
+                dataType: 'json',
+                data: { :  },
+                success: function (data) {
+                },
+                error: function (data, errorThrown) {
+                    alert(errorThrown);
+                }
+            });
+        }
     </script>
     }
