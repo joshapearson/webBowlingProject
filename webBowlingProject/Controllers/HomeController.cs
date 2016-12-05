@@ -14,25 +14,32 @@ namespace webBowlingProject.Controllers
 		public ActionResult Index(GamesViewModel model)
 			{
 			Random rnd = new Random();
-            int roll = rnd.Next(1, 10);
-            int[] Frames = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            for (int i = 0; i < 9; i++)
-            {
+            int roll = rnd.Next(1, 10);         
                 Games game = new Games()
                 {
                     Pins = roll,
                     GameId = model.GameId,
-                    frames = Frames[i],
+                    frames = model.frames,
                     Score = model.Score,
                     player = model.player,
                 };
-            }
+         
             return View("Index", model);
 			}
-            public JsonResult getFrame(int Frames)
+            public JsonResult getFrame(int GameId)
         {
-            return Json(JsonRequestBehavior.AllowGet);
+			Games games = new Games();
+			gamesAjax i = new gamesAjax { Pins = games.Pins, frames = games.frames, score = games.Score };
+            return Json(i, JsonRequestBehavior.AllowGet);
         }
+
+		private class gamesAjax
+			{
+			public int Pins { get; set; }
+			public int frames { get; set; }
+			public int score { get; set; }
+
+			}
 		}
 	}
 
