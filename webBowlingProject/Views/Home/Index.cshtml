@@ -5,7 +5,7 @@
 
 <h1>E-bowling</h1>
 @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "GameId" }))
-    {
+{
     <div class="form-group">
         <div class="control-label col-sm-12">
             Please Enter Player Name
@@ -17,43 +17,37 @@
             @Html.ValidationMessageFor(model => model.player)
         </div>
     </div>
-    <div class="form-group">
-        <div class="control-label col-sm-12">
-            Pins Hit
-        </div>
-        <div>
+
+    foreach (var item in )
+    {
+        <div class="form-group">
+            <div class="control-label col-sm-12">
+                Pins Hit
+            </div>
             <div class="col-md-12">
-                @Html.DisplayFor(m => m.Pins, new { @class = "form-control", @placeholder = "Pins", maxlength = 200 })
+                @item.Pins
             </div>
-            @Html.ValidationMessageFor(model => model.Pins)
         </div>
-    </div>
-    <div class="form-group">
-        <div class="control-label col-sm-12 text-left ">
-            Score
-        </div>
-        <div class="col-xs-12">
-            @Html.DisplayFor(m => m.Score, new { @class = "form-control", @placeholder = "Score", maxlength = 200 })
-           
-        </div>
-        @Html.ValidationMessageFor(model => model.Score)
-    </div>
-    <div class="form-group">
-        <div class="control-label col-sm-12 text-left ">
-            Frame Number
-        </div>
-            <div>
-                <div class="col-sm-12">
-                    @Html.DisplayFor(m => m.frames, new { @class = "form-control", maxlength = 200 })
-                </div>
-                @Html.ValidationMessageFor(model => model.frames)
+        <div class="form-group">
+            <div class="control-label col-sm-12 text-left ">
+                Score
             </div>
-    </div>
-
-    <div id="result"></div>
-
-    <input type="submit" value="Roll" class="btn btn-primary" id="rollButton" />
+            <div class="col-xs-12">
+                @item.Score
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="control-label col-sm-12">
+                Frame Number
+            </div>
+            <div class="col-sm-1">
+                @item.frames
+            </div>
+        </div>
     }
+    <div id="result"></div>
+    <input type="submit" value="Roll" class="btn btn-primary" id="rollButton" />
+}
 @section scripts{
     <script>
         function getFrame() {
@@ -61,7 +55,7 @@
             $.ajax({
                 url: '@Url.Action("Index", "Home")',
                 dataType: 'json',
-                data: {GameId : GameIdValue },
+                data: { GameId: GameIdValue },
                 success: function (data) {
                     $("#Pins").val(data.Pins);
                     $("#Score").val(data.Score);
@@ -74,12 +68,10 @@
         }
 
         if (typeof (Storage) !== "undefined") {
-            // Store
-            localStorage.setItem("frame",  $("#Score").val());
-            // Retrieve
-            document.getElementById("result").innerHTML = localStorage.getItem("Score");
+            localStorage.setItem("frames", $("#Score").val());
+            document.getElementById("#result").innerHTML = localStorage.getItem("#Score");
         } else {
-            document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+            document.getElementById("#result").innerHTML = "Sorry, your browser does not support Web Storage...";
         }
     </script>
 }
